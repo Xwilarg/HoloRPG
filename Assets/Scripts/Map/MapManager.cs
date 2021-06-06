@@ -10,5 +10,13 @@ namespace HoloRPG.Map
         {
             _grid = new(Resources.Load<TextAsset>("SampleMap").text);
         }
+
+        private void OnDrawGizmos()
+        {
+            if (_grid != null)
+            {
+                _grid.DrawGizmos();
+            }
+        }
     }
 }
