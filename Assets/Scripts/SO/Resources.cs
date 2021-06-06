@@ -7,5 +7,6 @@ namespace HoloRPG.SO
     {
         [Header("Prefabs")]
         public GameObject Character;
+        public GameObject Rock;
     }
 }

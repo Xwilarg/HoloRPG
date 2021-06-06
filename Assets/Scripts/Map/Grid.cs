@@ -31,9 +31,10 @@ namespace HoloRPG.Map
                 }
                 for (int x = 0; x < line.Length; x++)
                 {
-                    _grid[y, x] = line[x] switch
+                    _grid[x, y] = line[x] switch
                     {
                         '.' => null,
+                        'X' => new ObstacleElement(x, y),
                         _ => throw new ArgumentException($"Invalid tile value {line[x]} at ({x};{y})"),
                     };
                 }
@@ -58,11 +59,23 @@ namespace HoloRPG.Map
             {
                 for (int x = 0; x < _grid.GetLength(1); x++)
                 {
-                    var color = _grid[x, y] switch
+                    var elem = _grid[x, y];
+                    if (elem == null)
                     {
-                        null => Color.white,
-                        _ => Color.black,
-                    };
+                        Gizmos.color = Color.white;
+                    }
+                    else if (elem is ObstacleElement oe)
+                    {
+                        Gizmos.color = Color.black;
+                    }
+                    else if (elem is CharacterElement ce)
+                    {
+                        Gizmos.color = Color.blue;
+                    }
+                    else
+                    {
+                        Gizmos.color = Color.red;
+                    }
                     Gizmos.DrawWireCube(new Vector3(x, 0f, y), new Vector3(1f, 0f, 1f));
                 }
             }
