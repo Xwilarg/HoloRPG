@@ -1,11 +1,12 @@
-﻿using System;
+﻿using HoloRPG.Map.GridElement;
+using System;
 using UnityEngine;
 
 namespace HoloRPG.Map
 {
     public class Grid
     {
-        private AGridElement[,] _grid;
+        private IGridElement[,] _grid;
 
         public Grid(string map)
         {
@@ -19,7 +20,7 @@ namespace HoloRPG.Map
             }
 
             var lineLength = map2d[0].Length;
-            _grid = new AGridElement[map2d.Length, lineLength];
+            _grid = new IGridElement[map2d.Length, lineLength];
             // Iterate on text file and load grid
             for (int y = 0; y < map2d.Length; y++)
             {
@@ -39,12 +40,29 @@ namespace HoloRPG.Map
             }
         }
 
+        /// <summary>
+        /// Add an element in the grid, we assume the positions are in the grid
+        /// </summary>
+        public void Add(int x, int y, IGridElement element)
+        {
+            if (_grid[x, y] != null)
+            {
+                throw new ArgumentException($"Can't add an element to grid at ({x};{y}), position is not empty");
+            }
+            _grid[x, y] = element;
+        }
+
         public void DrawGizmos()
         {
             for (int y = 0; y < _grid.GetLength(0); y++)
             {
                 for (int x = 0; x < _grid.GetLength(1); x++)
                 {
+                    var color = _grid[x, y] switch
+                    {
+                        null => Color.white,
+                        _ => Color.black,
+                    };
                     Gizmos.DrawWireCube(new Vector3(x, 0f, y), new Vector3(1f, 0f, 1f));
                 }
             }
