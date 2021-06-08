@@ -78,5 +78,14 @@ namespace HoloRPG.Character
 
         private Vector2Int RoundVector3(Vector3 pos)
             => new(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.y));
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            foreach (var t in _tiles)
+            {
+                Gizmos.DrawLine(new Vector3(t.Position.x, 0f, t.Position.y), new Vector3(t.From.x, 0f, t.From.y));
+            }
+        }
     }
 }
