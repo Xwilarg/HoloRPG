@@ -1,4 +1,3 @@
-using HoloRPG.Map.GridElement;
 using UnityEngine;
 
 namespace HoloRPG.Map
@@ -10,19 +9,16 @@ namespace HoloRPG.Map
         private void Awake()
         {
             S = this;
-            _grid = new(Resources.Load<TextAsset>("SampleMap").text);
+            Grid = new(Resources.Load<TextAsset>("SampleMap").text);
         }
 
-        private Grid _grid;
-
-        public void AddToGrid(int x, int y, IGridElement element)
-            => _grid.Add(x, y, element);
+        public Grid Grid { private set; get; }
 
         private void OnDrawGizmos()
         {
-            if (_grid != null)
+            if (Grid != null)
             {
-                _grid.DrawGizmos();
+                Grid.DrawGizmos();
             }
         }
     }

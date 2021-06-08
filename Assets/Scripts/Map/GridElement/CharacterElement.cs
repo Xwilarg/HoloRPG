@@ -8,5 +8,8 @@ namespace HoloRPG.Map.GridElement
             => _me = charac;
 
         private CharacterImpl _me;
+
+        public bool CanShadowMoveHere()
+            => true;
     }
 }

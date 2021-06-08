@@ -14,7 +14,7 @@ namespace HoloRPG.Character
             _gameObject = Object.Instantiate(StaticResources.S.Resources.Character, new Vector3(x, 1f, y), Quaternion.identity);
 
             var ce = new CharacterElement(this);
-            MapManager.S.AddToGrid(x, y, ce);
+            MapManager.S.Grid.Add(x, y, ce);
         }
 
         public int _team;

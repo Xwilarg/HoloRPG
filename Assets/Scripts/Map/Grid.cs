@@ -8,6 +8,16 @@ namespace HoloRPG.Map
     {
         private IGridElement[,] _grid;
 
+        public int GetGridHeight()
+        {
+            return _grid.GetLength(0);
+        }
+
+        public int GetGridWidth()
+        {
+            return _grid.GetLength(1);
+        }
+
         public Grid(string map)
         {
             map = map.Replace("\r", ""); // We remove \r just in case Windows added some
@@ -52,6 +62,9 @@ namespace HoloRPG.Map
             }
             _grid[x, y] = element;
         }
+
+        public IGridElement Get(int x, int y)
+            => _grid[x, y];
 
         public void DrawGizmos()
         {

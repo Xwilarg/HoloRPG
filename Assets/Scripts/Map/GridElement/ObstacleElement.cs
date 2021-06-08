@@ -11,5 +11,8 @@ namespace HoloRPG.Map.GridElement
         }
 
         private readonly GameObject _gameObject;
+
+        public bool CanShadowMoveHere()
+            => false;
     }
 }
