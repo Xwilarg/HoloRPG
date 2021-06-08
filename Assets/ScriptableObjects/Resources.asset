@@ -15,3 +15,4 @@ MonoBehaviour:
   Character: {fileID: 7636811001637576956, guid: 869ec316b0e5f27488b587216159d11d, type: 3}
   Rock: {fileID: 8285747004269007690, guid: 0f7eaab94b5bb704286847d88b101ae9, type: 3}
   MovementTile: {fileID: 4747011687534018507, guid: ab8a99dcfb4d5e74c8b5eb6836d910b6, type: 3}
+  Path: {fileID: 320940806551116709, guid: 78ad387e822ab7d4a801990429b5208b, type: 3}

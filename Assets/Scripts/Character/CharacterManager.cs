@@ -31,26 +31,27 @@ namespace HoloRPG.Character
             {
                 var worldPos = hit.point;
                 var mousePos = new Vector2Int(Mathf.RoundToInt(worldPos.x), Mathf.RoundToInt(worldPos.z));
-                Debug.Log(mousePos);
                 var t = _tiles.FirstOrDefault(x => x.Position == mousePos);
                 if (t != null)
                 {
+                    // TODO: Don't do that each loop
                     foreach (var go in _instanciatedPath) Destroy(go);
                     _instanciatedPath.Clear();
-                    // DrawPath(t); // TODO: Stack Overflow
+                    DrawPath(t); // TODO: Stack Overflow sometimes
                 }
             }
         }
 
         private void DrawPath(TileDirection tileD)
         {
-            if (tileD.From == null)
+            if (tileD.From == tileD.Position)
             {
                 return;
             }
+            var yRot = tileD.Position.x == tileD.From.x ? 90f : 0f;
             var sum = tileD.Position + tileD.From;
             var pos = new Vector3(sum.x / 2f, .5f, sum.y / 2f);
-            _instanciatedPath.Add(Instantiate(StaticResources.S.Resources.Path, pos, StaticResources.S.Resources.Path.transform.rotation));
+            _instanciatedPath.Add(Instantiate(StaticResources.S.Resources.Path, pos, Quaternion.Euler(0f, yRot, 90f)));
             DrawPath(_tiles.First(x => x.Position == tileD.From));
         }
 
