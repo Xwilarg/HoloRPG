@@ -70,7 +70,9 @@ namespace HoloRPG.Character
             _instanciatedPath.Clear();
 
             _tiles.Clear();
-            Pathfinding.GetRange(RoundVector3(_characters[_currentTurn]._gameObject.transform.position), 10, _tiles);
+            var startingPos = RoundVector3(_characters[_currentTurn]._gameObject.transform.position);
+            _tiles.Add(new(startingPos, startingPos, int.MaxValue));
+            Pathfinding.GetRange(startingPos, 10, _tiles);
             foreach (var tile in _tiles)
             {
                 _instanciatedTiles.Add(Instantiate(StaticResources.S.Resources.MovementTile, new Vector3(tile.Position.x, .01f, tile.Position.y), Quaternion.identity));
