@@ -12,5 +12,6 @@ namespace HoloRPG.SO
         }
 
         public Resources Resources;
+        public GameInfo GameInfo;
     }
 }
