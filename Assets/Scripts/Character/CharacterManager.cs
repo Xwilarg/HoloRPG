@@ -13,10 +13,18 @@ namespace HoloRPG.Character
         private readonly List<TileDirection> _tiles = new(); // Tiles informations
         private readonly List<GameObject> _instanciatedPath = new(); // Display path from character to current tile
 
+        private GameObject _ghost;
+
+        private Transform _pathParent;
+        private Transform _tilesParent;
+
         private int _currentTurn = -1;
 
         private void Start()
         {
+            _pathParent = new GameObject("Path").transform;
+            _tilesParent = new GameObject("Tiles").transform;
+
             _characters.Add(new CharacterImpl(2, 2, 1));
             _characters.Add(new CharacterImpl(2, 3, 1));
             _characters.Add(new CharacterImpl(10, 10, 2));
@@ -55,32 +63,47 @@ namespace HoloRPG.Character
             var yRot = tileD.Position.x == tileD.From.x ? 90f : 0f;
             var sum = tileD.Position + tileD.From;
             var pos = new Vector3(sum.x / 2f, .5f, sum.y / 2f);
-            _instanciatedPath.Add(Instantiate(StaticResources.S.Resources.Path, pos, Quaternion.Euler(0f, yRot, 90f)));
+            var go = Instantiate(StaticResources.S.Resources.Path, pos, Quaternion.Euler(0f, yRot, 90f));
+            go.transform.parent = _pathParent;
+            _instanciatedPath.Add(go);
             DrawPath(_tiles.First(x => x.Position == tileD.From));
         }
 
         public void NextTurn()
         {
+            // Set next turn
             _currentTurn++;
             if (_currentTurn >= _characters.Count)
             {
                 _currentTurn = 0;
             }
 
+            // Clear previous objects
             foreach (var go in _instanciatedTiles) Destroy(go);
             _instanciatedTiles.Clear();
-
             foreach (var go in _instanciatedPath) Destroy(go);
             _instanciatedPath.Clear();
-
             _tiles.Clear();
+
+            // Generate tiles
             var startingPos = RoundVector3(_characters[_currentTurn]._gameObject.transform.position);
             _tiles.Add(new(startingPos, startingPos, int.MaxValue));
             Pathfinding.GetRange(startingPos, 10, _tiles);
             foreach (var tile in _tiles)
             {
-                _instanciatedTiles.Add(Instantiate(StaticResources.S.Resources.MovementTile, new Vector3(tile.Position.x, .01f, tile.Position.y), Quaternion.identity));
+                var go = Instantiate(StaticResources.S.Resources.MovementTile, new Vector3(tile.Position.x, .01f, tile.Position.y), Quaternion.identity);
+                go.transform.parent = _tilesParent;
+                _instanciatedTiles.Add(go);
             }
+
+            // Spawn ghost
+            if (_ghost != null)
+            {
+                Destroy(_ghost);
+            }
+            var currCharacter = _characters[_currentTurn]._gameObject;
+            _ghost = Instantiate(currCharacter, currCharacter.transform.position, currCharacter.transform.rotation);
+            _ghost.name = "Ghost";
         }
 
         private Vector2Int RoundVector3(Vector3 pos)
