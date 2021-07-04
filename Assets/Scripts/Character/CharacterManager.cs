@@ -84,7 +84,7 @@ namespace HoloRPG.Character
         }
 
         private Vector2Int RoundVector3(Vector3 pos)
-            => new(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.y));
+            => new(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.y) + 1);
 
         private void OnDrawGizmos()
         {
