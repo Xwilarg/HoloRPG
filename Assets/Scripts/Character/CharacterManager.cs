@@ -26,24 +26,28 @@ namespace HoloRPG.Character
 
         private void Update()
         {
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Get position of the mouse
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
+                // Get the tile where the mouse is
                 var worldPos = hit.point;
                 var mousePos = new Vector2Int(Mathf.RoundToInt(worldPos.x), Mathf.RoundToInt(worldPos.z));
                 var t = _tiles.FirstOrDefault(x => x.Position == mousePos);
-                if (t != null)
+
+                if (t != null) // If we are actually overring a tile
                 {
                     // TODO: Don't do that each loop
+                    // Clean path
                     foreach (var go in _instanciatedPath) Destroy(go);
                     _instanciatedPath.Clear();
-                    DrawPath(t); // TODO: Stack Overflow sometimes
+                    DrawPath(t); // Draw it again
                 }
             }
         }
 
         private void DrawPath(TileDirection tileD)
         {
+            // We reached player position (only tile where from is the same as position)
             if (tileD.From == tileD.Position)
             {
                 return;
