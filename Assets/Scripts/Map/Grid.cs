@@ -6,7 +6,7 @@ namespace HoloRPG.Map
 {
     public class Grid
     {
-        private IGridElement[,] _grid;
+        private readonly IGridElement[,] _grid;
 
         public int GetGridHeight()
         {
@@ -77,11 +77,11 @@ namespace HoloRPG.Map
                     {
                         Gizmos.color = Color.white;
                     }
-                    else if (elem is ObstacleElement oe)
+                    else if (elem is ObstacleElement)
                     {
                         Gizmos.color = Color.black;
                     }
-                    else if (elem is CharacterElement ce)
+                    else if (elem is CharacterElement)
                     {
                         Gizmos.color = Color.blue;
                     }
