@@ -333,6 +333,8 @@ GameObject:
   - component: {fileID: 396850826}
   - component: {fileID: 396850828}
   - component: {fileID: 396850827}
+  - component: {fileID: 396850829}
+  - component: {fileID: 396850830}
   m_Layer: 5
   m_Name: ActionBar
   m_TagString: Untagged
@@ -398,6 +400,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 396850825}
   m_CullTransparentMesh: 1
+--- !u!114 &396850829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396850825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 3
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!114 &396850830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396850825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ac94a45820ce544b34244d5f30a6b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &529494424
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,10 +741,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b334633d762c6844905a59cefd3e37a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActionBar: {fileID: 396850830}
   Resources: {fileID: 11400000, guid: 1d2637b8bc050a945922a50410448d8d, type: 2}
   GameInfo: {fileID: 11400000, guid: 3a49f8f982132344fb95a2a00bfcf31b, type: 2}
-  TilesParent: {fileID: 0}
-  PathParent: {fileID: 0}
 --- !u!114 &1869544250
 MonoBehaviour:
   m_ObjectHideFlags: 0

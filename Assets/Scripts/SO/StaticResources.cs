@@ -13,10 +13,12 @@ namespace HoloRPG.SO
             TilesParent = new GameObject("Tiles").transform;
         }
 
+        public ActionBar ActionBar;
+
         public Resources Resources;
         public GameInfo GameInfo;
 
-        public Transform TilesParent;
-        public Transform PathParent;
+        public Transform TilesParent { private set; get; }
+        public Transform PathParent { private set; get; }
     }
 }

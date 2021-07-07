@@ -1,5 +1,6 @@
 ﻿using HoloRPG.SO;
 using System.Linq;
+using UnityEngine;
 
 namespace HoloRPG.Character.Action
 {
@@ -22,8 +23,29 @@ namespace HoloRPG.Character.Action
             {
                 return false;
             }
-            _actions[_index++] = action;
+
+            // Add action
+            _actions[_index] = action;
+
+            // Change color of bar in UI
+            StaticResources.S.ActionBar.ChangeImageColor(
+                action switch
+                {
+                    ActionType.MOVE => Color.blue,
+                    _ => Color.black
+                },
+                _index);
+
+            // Increase index
+            _index++;
+
             return true;
+        }
+
+        public void Clear()
+        {
+            _index = 0;
+            StaticResources.S.ActionBar.Clear();
         }
 
         private readonly ActionType[] _actions;

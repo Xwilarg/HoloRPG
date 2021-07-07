@@ -68,6 +68,7 @@ namespace HoloRPG.Character
             _tiles.Clear();
             Object.Destroy(_ghost);
             _lastUpdatedTile = null;
+            _actions.Clear();
         }
 
         public void UpdatePath(Vector2 mousePos, bool moveToPosition)
@@ -117,6 +118,7 @@ namespace HoloRPG.Character
             var go = Object.Instantiate(StaticResources.S.Resources.Path, pos, Quaternion.Euler(0f, yRot, 90f));
             go.transform.parent = StaticResources.S.PathParent;
             _instanciatedPath.Add(go);
+            _instanciatedPathInfo.Add(tileD);
             DrawPath(_tiles.First(x => x.Position == tileD.From));
         }
 
