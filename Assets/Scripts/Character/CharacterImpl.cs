@@ -20,15 +20,19 @@ namespace HoloRPG.Character
             MapManager.S.Grid.Add(x, y, ce);
         }
 
-        private readonly int _team;
-        private readonly GameObject _gameObject;
+        private readonly int _team; // Team the character is in
+        private readonly GameObject _gameObject; // Current gameobject used for the character
 
-        private GameObject _ghost;
+        private GameObject _ghost; // Ghost display (used to display preview of actions)
+        private TileDirection _lastUpdatedTile; // Last tile we hovered, we keep that here for uptimization purpose
 
         private readonly List<GameObject> _instanciatedTiles = new(); // Tiles that display a character available paths
         private readonly List<TileDirection> _tiles = new(); // Tiles informations
         private readonly List<GameObject> _instanciatedPath = new(); // Display path from character to current tile
 
+        /// <summary>
+        /// Called at the start of the turn, display available range etc
+        /// </summary>
         public void StartTurn()
         {
             // Generate tiles
@@ -47,6 +51,9 @@ namespace HoloRPG.Character
             _ghost.name = "Ghost";
         }
 
+        /// <summary>
+        /// Called at the end of the turn, clean resources
+        /// </summary>
         public void EndTurn()
         {
             foreach (var go in _instanciatedTiles) Object.Destroy(go);
@@ -55,25 +62,32 @@ namespace HoloRPG.Character
             _instanciatedPath.Clear();
             _tiles.Clear();
             Object.Destroy(_ghost);
+            _lastUpdatedTile = null;
         }
 
         public void UpdatePath(Vector2 mousePos)
         {
             var t = _tiles.FirstOrDefault(x => x.Position == mousePos);
 
-            if (t != null) // If we are actually overring a tile
+            if (t != null && t != _lastUpdatedTile) // If we are actually overring a tile
             {
-                // TODO: Don't do that each loop
                 // Clean path
                 foreach (var go in _instanciatedPath) Object.Destroy(go);
                 _instanciatedPath.Clear();
                 DrawPath(t); // Draw it again
+                _lastUpdatedTile = t;
             }
         }
 
+        /// <summary>
+        /// Vector3 to Vector2Int by rounding all values
+        /// </summary>
         private static Vector2Int RoundVector3(Vector3 pos)
             => new(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.y) + 1);
 
+        /// <summary>
+        /// Draw a path from the current character position to the tile given in parameter
+        /// </summary>
         private void DrawPath(TileDirection tileD)
         {
             // We reached player position (only tile where from is the same as position)
@@ -90,6 +104,9 @@ namespace HoloRPG.Character
             DrawPath(_tiles.First(x => x.Position == tileD.From));
         }
 
+        /// <summary>
+        /// Draw gizmos debug
+        /// </summary>
         public void DrawGizmos()
         {
             Gizmos.color = Color.red;

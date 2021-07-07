@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace HoloRPG.Character
@@ -33,7 +32,7 @@ namespace HoloRPG.Character
 
         public void NextTurn()
         {
-            if (_currentTurn != -1)
+            if (_currentTurn != -1) // currentTurn is -1 at the first turn of the game
             {
                 _characters[_currentTurn].EndTurn();
             }
@@ -50,7 +49,10 @@ namespace HoloRPG.Character
 
         private void OnDrawGizmos()
         {
-            _characters[_currentTurn].DrawGizmos();
+            if (_currentTurn != -1) // We don't display anything while we are in the editor
+            {
+                _characters[_currentTurn].DrawGizmos();
+            }
         }
     }
 }
