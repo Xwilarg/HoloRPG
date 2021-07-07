@@ -703,6 +703,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Resources: {fileID: 11400000, guid: 1d2637b8bc050a945922a50410448d8d, type: 2}
   GameInfo: {fileID: 11400000, guid: 3a49f8f982132344fb95a2a00bfcf31b, type: 2}
+  TilesParent: {fileID: 0}
+  PathParent: {fileID: 0}
 --- !u!114 &1869544250
 MonoBehaviour:
   m_ObjectHideFlags: 0

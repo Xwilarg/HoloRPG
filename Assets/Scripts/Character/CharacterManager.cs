@@ -26,7 +26,8 @@ namespace HoloRPG.Character
                 // Get the tile where the mouse is
                 var worldPos = hit.point;
                 var mousePos = new Vector2Int(Mathf.RoundToInt(worldPos.x), Mathf.RoundToInt(worldPos.z));
-                _characters[_currentTurn].UpdatePath(mousePos);
+                // Update path position, if the player clicked on the tile, we also move there
+                _characters[_currentTurn].UpdatePath(mousePos, moveToPosition: Input.GetMouseButtonDown(0));
             }
         }
 

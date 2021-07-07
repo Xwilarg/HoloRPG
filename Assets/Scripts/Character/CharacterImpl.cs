@@ -1,4 +1,5 @@
-﻿using HoloRPG.Map;
+﻿using HoloRPG.Character.Action;
+using HoloRPG.Map;
 using HoloRPG.Map.GridElement;
 using HoloRPG.Map.Path;
 using HoloRPG.SO;
@@ -29,6 +30,9 @@ namespace HoloRPG.Character
         private readonly List<GameObject> _instanciatedTiles = new(); // Tiles that display a character available paths
         private readonly List<TileDirection> _tiles = new(); // Tiles informations
         private readonly List<GameObject> _instanciatedPath = new(); // Display path from character to current tile
+        private readonly List<TileDirection> _instanciatedPathInfo = new();
+
+        private readonly ActionPlanner _actions = new(); // Actions to be done by the character
 
         /// <summary>
         /// Called at the start of the turn, display available range etc
@@ -60,22 +64,34 @@ namespace HoloRPG.Character
             _instanciatedTiles.Clear();
             foreach (var go in _instanciatedPath) Object.Destroy(go);
             _instanciatedPath.Clear();
+            _instanciatedPathInfo.Clear();
             _tiles.Clear();
             Object.Destroy(_ghost);
             _lastUpdatedTile = null;
         }
 
-        public void UpdatePath(Vector2 mousePos)
+        public void UpdatePath(Vector2 mousePos, bool moveToPosition)
         {
             var t = _tiles.FirstOrDefault(x => x.Position == mousePos);
 
-            if (t != null && t != _lastUpdatedTile) // If we are actually overring a tile
+            if (t != null) // If we are actually overring a tile
             {
-                // Clean path
-                foreach (var go in _instanciatedPath) Object.Destroy(go);
-                _instanciatedPath.Clear();
-                DrawPath(t); // Draw it again
-                _lastUpdatedTile = t;
+                if (t != _lastUpdatedTile)
+                {
+                    // Clean path
+                    foreach (var go in _instanciatedPath) Object.Destroy(go);
+                    _instanciatedPath.Clear();
+                    _instanciatedPathInfo.Clear();
+                    DrawPath(t); // Draw it again
+                    _lastUpdatedTile = t;
+                }
+                if (moveToPosition)
+                {
+                    foreach (var pathElem in _instanciatedPathInfo)
+                    {
+                        _actions.AddAction(ActionType.MOVE);
+                    }
+                }
             }
         }
 
